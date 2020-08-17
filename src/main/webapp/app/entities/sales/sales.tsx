@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Col, Row, Table } from 'reactstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Button } from '@material-ui/core';
+import { Visibility, Edit, Delete } from '@material-ui/icons';
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -10,12 +12,20 @@ import { getEntities } from './sales.reducer';
 import { ISales } from 'app/shared/model/sales.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ISalesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
+export interface ISalesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
 
 export const Sales = (props: ISalesProps) => {
   useEffect(() => {
     props.getEntities();
   }, []);
+
+  const styles = useStyles();
 
   const { salesList, match, loading } = props;
   return (
@@ -28,73 +38,82 @@ export const Sales = (props: ISalesProps) => {
           <Translate contentKey="testApp.sales.home.createLabel">Create new Sales</Translate>
         </Link>
       </h2>
-      <div className="table-responsive">
+      <TableContainer>
         {salesList && salesList.length > 0 ? (
-          <Table responsive>
-            <thead>
-              <tr>
-                <th>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
                   <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
+                </TableCell>
+                <TableCell>
                   <Translate contentKey="testApp.sales.description">Description</Translate>
-                </th>
-                <th>
+                </TableCell>
+                <TableCell>
                   <Translate contentKey="testApp.sales.state">State</Translate>
-                </th>
-                <th>
+                </TableCell>
+                <TableCell>
                   <Translate contentKey="testApp.sales.date">Date</Translate>
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {salesList.map((sales, i) => (
-                <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${sales.id}`} color="link" size="sm">
-                      {sales.id}
+                <TableRow key={`entity-${i}`}>
+                  <TableCell>
+                    <Button>
+                      <Link to={`${match.url}/${sales.id}`}>{sales.id}</Link>
                     </Button>
-                  </td>
-                  <td>{sales.description}</td>
-                  <td>
+                  </TableCell>
+                  <TableCell>{sales.description}</TableCell>
+                  <TableCell>
                     <Translate contentKey={`testApp.State.${sales.state}`} />
-                  </td>
-                  <td>{sales.date ? <TextFormat type="date" value={sales.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
-                  <td className="text-right">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${sales.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
+                  </TableCell>
+                  <TableCell>{sales.date ? <TextFormat type="date" value={sales.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</TableCell>
+                  <TableCell className="text-right">
+                    <Link to={`${match.url}/${sales.id}`}>
+                      <Button
+                        variant="contained"
+                        color="default"
+                        className={styles.button}
+                        startIcon={<Visibility />}
+                      >
+                        View
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${sales.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
+                    </Link>
+                    <Link to={`${match.url}/${sales.id}/edit`}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        className={styles.button}
+                        startIcon={<Edit />}
+                      >
+                        Edit
                       </Button>
-                      <Button tag={Link} to={`${match.url}/${sales.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
+                    </Link>
+                    <Link to={`${match.url}/${sales.id}/delete`}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={styles.button}
+                        startIcon={<Delete />}
+                      >
+                        Delete
                       </Button>
-                    </div>
-                  </td>
-                </tr>
+                    </Link>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
+            </TableBody>
           </Table>
         ) : (
-          !loading && (
-            <div className="alert alert-warning">
-              <Translate contentKey="testApp.sales.home.notFound">No Sales found</Translate>
-            </div>
-          )
-        )}
-      </div>
+            !loading && (
+              <div className="alert alert-warning">
+                <Translate contentKey="testApp.sales.home.notFound">No Sales found</Translate>
+              </div>
+            )
+          )}
+      </TableContainer>
     </div>
   );
 };
