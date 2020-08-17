@@ -18,7 +18,8 @@
       },
       "description": "Description",
       "state": "State",
-      "date": "Date"
+      "date": "Date",
+      "actions": "Actions"
     }
   }
 }
