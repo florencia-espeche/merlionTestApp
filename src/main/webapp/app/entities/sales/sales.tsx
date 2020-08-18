@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Button, Paper } from '@material-ui/core';
+import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Button, Paper, Typography } from '@material-ui/core';
 import { Visibility, Edit, Delete, Add } from '@material-ui/icons';
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 
@@ -11,14 +11,19 @@ import { getEntities } from './sales.reducer';
 import { ISales } from 'app/shared/model/sales.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
+import './sales.scss';
+
 export interface ISalesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
+  },
+  title: {
+    flexGrow: 1
   },
   table: {
-    minWidth: 650,
+    minWidth: 650
   }
 }));
 
@@ -31,15 +36,22 @@ export const Sales = (props: ISalesProps) => {
 
   const { salesList, match, loading } = props;
   return (
-    <div>
-      <h2 id="sales-heading">
-        <Translate contentKey="testApp.sales.home.title">Sales</Translate>
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <Add />
-          &nbsp;
-          <Translate contentKey="testApp.sales.home.createLabel">Create new Sales</Translate>
+    <>
+      <div id="sales-heading">
+        <Typography variant="h2" className={styles.title} id="sales-heading__title">
+          <Translate contentKey="testApp.sales.home.title">Sales</Translate>
+        </Typography>
+        <Link to={`${match.url}/new`} id="jh-create-entity" style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="medium"
+            startIcon={<Add />}
+          >
+            <Translate contentKey="testApp.sales.home.createLabel">Create new Sales</Translate>
+          </Button>
         </Link>
-      </h2>
+      </div>
       <TableContainer component={Paper}>
         {salesList && salesList.length > 0 ? (
           <Table className={styles.table} size="small" aria-label="Sales table">
@@ -122,7 +134,7 @@ export const Sales = (props: ISalesProps) => {
             )
           )}
       </TableContainer>
-    </div>
+    </>
   );
 };
 
