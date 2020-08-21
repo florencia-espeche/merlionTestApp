@@ -1,17 +1,43 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { makeStyles } from '@material-ui/core/styles';
+import { Modal, Button, Grid } from '@material-ui/core';
+import { NotInterestedRounded, DeleteRounded } from '@material-ui/icons';
+
 import { Translate, ICrudGetAction, ICrudDeleteAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ISales } from 'app/shared/model/sales.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './sales.reducer';
 
-export interface ISalesDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+import './sales-delete-dialog.scss';
+
+const useStyles = makeStyles((theme) => ({
+  modal: {
+    position: 'absolute',
+    width: 500,
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #777777',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(3),
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  },
+  button: {
+    margin: theme.spacing(1)
+  },
+  buttons: {
+    justify: 'right'
+  }
+}));
+
+export interface ISalesDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> { }
 
 export const SalesDeleteDialog = (props: ISalesDeleteDialogProps) => {
+  const styles = useStyles();
+
   useEffect(() => {
     props.getEntity(props.match.params.id);
   }, []);
@@ -32,27 +58,41 @@ export const SalesDeleteDialog = (props: ISalesDeleteDialogProps) => {
 
   const { salesEntity } = props;
   return (
-    <Modal isOpen toggle={handleClose}>
-      <ModalHeader toggle={handleClose}>
-        <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
-      </ModalHeader>
-      <ModalBody id="testApp.sales.delete.question">
-        <Translate contentKey="testApp.sales.delete.question" interpolate={{ id: salesEntity.id }}>
-          Are you sure you want to delete this Sales?
-        </Translate>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="secondary" onClick={handleClose}>
-          <FontAwesomeIcon icon="ban" />
-          &nbsp;
-          <Translate contentKey="entity.action.cancel">Cancel</Translate>
-        </Button>
-        <Button id="jhi-confirm-delete-sales" color="danger" onClick={confirmDelete}>
-          <FontAwesomeIcon icon="trash" />
-          &nbsp;
-          <Translate contentKey="entity.action.delete">Delete</Translate>
-        </Button>
-      </ModalFooter>
+    <Modal open onClose={handleClose}>
+      <Grid container className={styles.modal}>
+        <Grid item className="modal_header">
+          <h2>
+            <Translate contentKey="entity.delete.title">Confirm delete operation</Translate>
+          </h2>
+        </Grid>
+        <Grid item className="modal_body">
+          <p id="testApp.sales.delete.question" >
+            <Translate contentKey="testApp.sales.delete.question" interpolate={{ id: salesEntity.id }}>
+              Are you sure you want to delete this Sales?
+            </Translate>
+          </p>
+        </Grid>
+        <Grid container item className={styles.buttons}>
+          <Button
+            className={styles.button}
+            type="button"
+            variant="contained"
+            color="default"
+            onClick={handleClose}
+            startIcon={<NotInterestedRounded />}>
+            <Translate contentKey="entity.action.cancel">Cancel</Translate>
+          </Button>
+          <Button id="jhi-confirm-delete-sales"
+            className={styles.button}
+            type="button"
+            variant="contained"
+            color="secondary"
+            onClick={confirmDelete}
+            startIcon={<DeleteRounded />}>
+            <Translate contentKey="entity.action.delete">Delete</Translate>
+          </Button>
+        </Grid>
+      </Grid>
     </Modal>
   );
 };
