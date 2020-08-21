@@ -1,5 +1,5 @@
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   left: 0;
@@ -10,6 +10,8 @@
     &--legal {
       padding: 3px;
       background-color: #5E99C5;
+      position: fixed;
+      bottom: 0;
     }
   }
 
