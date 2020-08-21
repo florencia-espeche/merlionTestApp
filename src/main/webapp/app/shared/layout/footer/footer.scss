@@ -1,3 +1,21 @@
 .footer {
-  height: 50px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+
+  &_container {
+  
+    &--legal {
+      padding: 3px;
+      background-color: #5E99C5;
+    }
+  }
+
+  p {
+    color: #FFFFFF;
+    font-weight: bold;
+    margin: 4px 0;
+  }
 }

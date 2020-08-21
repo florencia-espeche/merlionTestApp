@@ -136,5 +136,10 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "Pie de página"
+  "footer": "Pie de página",
+  "contact": "Contactanos",
+  "visit": "Visitanos",
+  "legal": "Todos los derechos reservados"
+
+
 }

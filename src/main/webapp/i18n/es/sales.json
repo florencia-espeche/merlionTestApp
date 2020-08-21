@@ -16,10 +16,13 @@
       "detail": {
         "title": "Sales"
       },
-      "description": "Description",
-      "state": "State",
-      "date": "Date",
-      "actions": "Actions"
+      "description": "Descripción",
+      "state": "Estado",
+      "date": "Fecha",
+      "actions": "Acciones",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete-button": "Borrar"
     }
   }
 }

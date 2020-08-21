@@ -96,7 +96,7 @@ export const Sales = (props: ISalesProps) => {
                         className={styles.button}
                         startIcon={<Visibility />}
                       >
-                        View
+                        <Translate contentKey="testApp.sales.view">View</Translate>
                       </Button>
                     </Link>
                     <Link to={`${match.url}/${sales.id}/edit`} style={{ textDecoration: 'none' }}>
@@ -107,7 +107,7 @@ export const Sales = (props: ISalesProps) => {
                         className={styles.button}
                         startIcon={<Edit />}
                       >
-                        Edit
+                        <Translate contentKey="testApp.sales.edit">Edit</Translate>
                       </Button>
                     </Link>
                     <Link to={`${match.url}/${sales.id}/delete`} style={{ textDecoration: 'none' }}>
@@ -118,7 +118,7 @@ export const Sales = (props: ISalesProps) => {
                         className={styles.button}
                         startIcon={<Delete />}
                       >
-                        Delete
+                        <Translate contentKey="testApp.sales.delete-button">Delete</Translate>
                       </Button>
                     </Link>
                   </TableCell>
