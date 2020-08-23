@@ -1,64 +1,98 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Typography, Button, Grid, List, ListItem, ListItemText } from '@material-ui/core';
+import { createStyles, withStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { Edit, ArrowBack } from '@material-ui/icons';
 
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './sales.reducer';
 import { ISales } from 'app/shared/model/sales.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ISalesDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+import './sales-detail.scss';
+
+export interface ISalesDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> { }
+
+const ColorButton = withStyles((theme: Theme) => ({
+  root: {
+    color: theme.palette.getContrastText(green[900]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+}))(Button);
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1)
+    },
+    title: {
+      flexGrow: 1
+    }
+  }),
+);
 
 export const SalesDetail = (props: ISalesDetailProps) => {
+  const styles = useStyles();
+
   useEffect(() => {
     props.getEntity(props.match.params.id);
   }, []);
 
   const { salesEntity } = props;
   return (
-    <Row>
-      <Col md="8">
-        <h2>
+    <Grid container justify="center">
+      <Grid item xs={6}>
+        <Typography variant="h2" className={styles.title} id="sales-detail_title">
           <Translate contentKey="testApp.sales.detail.title">Sales</Translate> [<b>{salesEntity.id}</b>]
-        </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="description">
-              <Translate contentKey="testApp.sales.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{salesEntity.description}</dd>
-          <dt>
-            <span id="state">
-              <Translate contentKey="testApp.sales.state">State</Translate>
-            </span>
-          </dt>
-          <dd>{salesEntity.state}</dd>
-          <dt>
-            <span id="date">
-              <Translate contentKey="testApp.sales.date">Date</Translate>
-            </span>
-          </dt>
-          <dd>{salesEntity.date ? <TextFormat value={salesEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
-        </dl>
-        <Button tag={Link} to="/sales" replace color="info">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
+        </Typography>
+        <List>
+          <ListItem>
+            <ListItemText
+              primary={<Translate contentKey="testApp.sales.description">Description</Translate>}
+              secondary={salesEntity.description}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary={<Translate contentKey="testApp.sales.state">State</Translate>}
+              secondary={salesEntity.state}
+            />
+          </ListItem>
+          <ListItem>
+            <ListItemText
+              primary={<Translate contentKey="testApp.sales.date">Date</Translate>}
+              secondary={salesEntity.date ? <TextFormat value={salesEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
+            />
+          </ListItem>
+        </List>
+        <Link to="/sales" style={{ textDecoration: 'none' }}>
+          <ColorButton
+            variant="contained"
+            color="primary"
+            className={styles.button}
+            startIcon={<ArrowBack />}
+          >
             <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/sales/${salesEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
+          </ColorButton>
+        </Link>
+        <Link to={`/sales/${salesEntity.id}/edit`} style={{ textDecoration: 'none' }}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={styles.button}
+            startIcon={<Edit />}
+          >
             <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
-      </Col>
-    </Row>
+          </Button>
+        </Link>
+      </Grid>
+    </Grid >
   );
 };
 
