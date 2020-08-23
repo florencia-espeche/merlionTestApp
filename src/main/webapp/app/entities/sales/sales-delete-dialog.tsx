@@ -20,16 +20,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #777777',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(3),
+    padding: theme.spacing(3,1,1,2),
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)'
   },
   button: {
     margin: theme.spacing(1)
-  },
-  buttons: {
-    justify: 'right'
   }
 }));
 
@@ -72,7 +69,7 @@ export const SalesDeleteDialog = (props: ISalesDeleteDialogProps) => {
             </Translate>
           </p>
         </Grid>
-        <Grid container item className={styles.buttons}>
+        <Grid container item justify="flex-end">
           <Button
             className={styles.button}
             type="button"

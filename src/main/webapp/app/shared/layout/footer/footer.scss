@@ -4,14 +4,10 @@
     &--legal {
       padding: 3px;
       background-color: #5E99C5;
-      position: absolute;
+      position: relative;
       bottom: 0;
+      color: #FFFFFF;
+      font-weight: bold;
     }
-  }
-
-  p {
-    color: #FFFFFF;
-    font-weight: bold;
-    margin: 4px 0;
   }
 }

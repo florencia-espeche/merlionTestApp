@@ -1,11 +1,12 @@
 .modal {
   &_header h2 {
-    color: #2A6A9E;
+    color: #2a6a9e;
+    margin: 10px 5px 5px;
     font-size: 22px;
-    margin-bottom: 5px;
   }
 
   &_body p {
     font-size: 18px;
+    margin: 10px 5px 30px;
   }
 }
