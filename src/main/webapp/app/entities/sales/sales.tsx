@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Button, Paper, Typography } from '@material-ui/core';
+import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { Grid, Box, Table, TableContainer, TableHead, TableCell, TableBody, TableRow, Button, Typography } from '@material-ui/core';
 import { Visibility, Edit, Delete, Add } from '@material-ui/icons';
 import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 
@@ -14,6 +14,31 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import './sales.scss';
 
 export interface ISalesProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
+
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: "#5E99C5",
+      color: theme.palette.common.white,
+      padding: 16,
+      fontSize: 18
+    },
+    body: {
+      fontSize: 14,
+    },
+  })
+)(TableCell);
+
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "&:nth-of-type(odd)": {
+        backgroundColor: theme.palette.action.hover,
+
+      },
+    },
+  })
+)(TableRow);
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -52,42 +77,45 @@ export const Sales = (props: ISalesProps) => {
           </Button>
         </Link>
       </div>
-      <TableContainer component={Paper}>
+      <TableContainer>
         {salesList && salesList.length > 0 ? (
-          <Table className={styles.table} size="small" aria-label="Sales table">
+          <Table
+            className={styles.table}
+            size="small"
+            aria-label="Sales table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">
+                <StyledTableCell align="center" >
                   <Translate contentKey="global.field.id">ID</Translate>
-                </TableCell>
-                <TableCell>
+                </StyledTableCell>
+                <StyledTableCell>
                   <Translate contentKey="testApp.sales.description">Description</Translate>
-                </TableCell>
-                <TableCell>
+                </StyledTableCell>
+                <StyledTableCell>
                   <Translate contentKey="testApp.sales.state">State</Translate>
-                </TableCell>
-                <TableCell>
+                </StyledTableCell>
+                <StyledTableCell>
                   <Translate contentKey="testApp.sales.date">Date</Translate>
-                </TableCell>
-                <TableCell align="center">
+                </StyledTableCell>
+                <StyledTableCell align="center">
                   <Translate contentKey="testApp.sales.actions">Actions</Translate>
-                </TableCell>
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {salesList.map((sales, i) => (
-                <TableRow key={`entity-${i}`}>
-                  <TableCell align="center">
+                <StyledTableRow key={`entity-${i}`} hover={true}>
+                  <StyledTableCell align="center">
                     <Button>
                       <Link to={`${match.url}/${sales.id}`} style={{ textDecoration: 'none' }}>{sales.id}</Link>
                     </Button>
-                  </TableCell>
-                  <TableCell>{sales.description}</TableCell>
-                  <TableCell>
+                  </StyledTableCell>
+                  <StyledTableCell>{sales.description}</StyledTableCell>
+                  <StyledTableCell>
                     <Translate contentKey={`testApp.State.${sales.state}`} />
-                  </TableCell>
-                  <TableCell>{sales.date ? <TextFormat type="date" value={sales.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</TableCell>
-                  <TableCell align="center">
+                  </StyledTableCell>
+                  <StyledTableCell>{sales.date ? <TextFormat type="date" value={sales.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</StyledTableCell>
+                  <StyledTableCell align="center">
                     <Link to={`${match.url}/${sales.id}`} style={{ textDecoration: 'none' }}>
                       <Button
                         variant="contained"
@@ -121,8 +149,8 @@ export const Sales = (props: ISalesProps) => {
                         <Translate contentKey="testApp.sales.delete-button">Delete</Translate>
                       </Button>
                     </Link>
-                  </TableCell>
-                </TableRow>
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>
