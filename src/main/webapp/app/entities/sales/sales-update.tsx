@@ -1,20 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
+import { Button, Grid, Typography, FormControl, InputLabel, FilledInput, Input, TextField, Select, MenuItem } from '@material-ui/core';
+import { createStyles, withStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { Save, ArrowBack } from '@material-ui/icons';
+
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
 import { getEntity, updateEntity, createEntity, reset } from './sales.reducer';
-import { ISales } from 'app/shared/model/sales.model';
+
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 
-export interface ISalesUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+import './sales-update.scss';
+
+export interface ISalesUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> { }
+
+const ColorButton = withStyles((theme: Theme) => ({
+  root: {
+    color: theme.palette.getContrastText(green[900]),
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+}))(Button);
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 300,
+    },
+    button: {
+      margin: theme.spacing(3, 1, 1)
+    },
+    title: {
+      flexGrow: 1
+    }
+  }),
+);
 
 export const SalesUpdate = (props: ISalesUpdateProps) => {
+  const styles = useStyles();
+
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { salesEntity, loading, updating } = props;
@@ -53,74 +84,90 @@ export const SalesUpdate = (props: ISalesUpdateProps) => {
   };
 
   return (
-    <div>
-      <Row className="justify-content-center">
-        <Col md="8">
-          <h2 id="testApp.sales.home.createOrEditLabel">
-            <Translate contentKey="testApp.sales.home.createOrEditLabel">Create or edit a Sales</Translate>
-          </h2>
-        </Col>
-      </Row>
-      <Row className="justify-content-center">
-        <Col md="8">
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            <AvForm model={isNew ? {} : salesEntity} onSubmit={saveEntity}>
-              {!isNew ? (
-                <AvGroup>
-                  <Label for="sales-id">
+    <Grid container justify="center">
+      <Grid item xs={12}>
+        <Typography variant="h2" className={styles.title} id="sales-update_title">
+          <Translate contentKey="testApp.sales.home.createOrEditLabel">Create or edit a Sales</Translate>
+        </Typography>
+      </Grid>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+          <form onSubmit={() => saveEntity}>
+            {!isNew ? (
+              <Grid item>
+                <FormControl className={styles.formControl} >
+                  <InputLabel htmlFor="sales-id" className="sales-update_label">
                     <Translate contentKey="global.field.id">ID</Translate>
-                  </Label>
-                  <AvInput id="sales-id" type="text" className="form-control" name="id" required readOnly />
-                </AvGroup>
-              ) : null}
-              <AvGroup>
-                <Label id="descriptionLabel" for="sales-description">
+                  </InputLabel>
+                  <FilledInput
+                    id="sales-id"
+                    type="text"
+                    name="id"
+                    value={props.match.params.id}
+                    required
+                    readOnly />
+                </FormControl>
+              </Grid>
+            ) : null}
+            <Grid item>
+              <FormControl className={styles.formControl}>
+                <InputLabel id="descriptionLabel" htmlFor="sales-description" className="sales-update_label">
                   <Translate contentKey="testApp.sales.description">Description</Translate>
-                </Label>
-                <AvField id="sales-description" type="text" name="description" />
-              </AvGroup>
-              <AvGroup>
-                <Label id="stateLabel" for="sales-state">
+                </InputLabel>
+                <Input id="sales-description" type="text" name="description" multiline rowsMax={4} />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl className={styles.formControl}>
+                <InputLabel id="stateLabel" htmlFor="sales-state" className="sales-update_label--state">
                   <Translate contentKey="testApp.sales.state">State</Translate>
-                </Label>
-                <AvInput
-                  id="sales-state"
-                  type="select"
-                  className="form-control"
-                  name="state"
+                </InputLabel>
+                <Select
+                  labelId="sales-state"
+                  id="state"
+                  className="sales-update_select"
                   value={(!isNew && salesEntity.state) || 'IN_CHARGE'}
                 >
-                  <option value="IN_CHARGE">{translate('testApp.State.IN_CHARGE')}</option>
-                  <option value="SHIPPED">{translate('testApp.State.SHIPPED')}</option>
-                  <option value="DELIVERED">{translate('testApp.State.DELIVERED')}</option>
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label id="dateLabel" for="sales-date">
+                  <MenuItem value="IN_CHARGE">{translate('testApp.State.IN_CHARGE')}</MenuItem>
+                  <MenuItem value="SHIPPED">{translate('testApp.State.SHIPPED')}</MenuItem>
+                  <MenuItem value="DELIVERED">{translate('testApp.State.DELIVERED')}</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <FormControl className={styles.formControl}>
+                <InputLabel id="dateLabel" htmlFor="sales-date" className="sales-update_label--date">
                   <Translate contentKey="testApp.sales.date">Date</Translate>
-                </Label>
-                <AvField id="sales-date" type="date" className="form-control" name="date" />
-              </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/sales" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
-                &nbsp;
-                <span className="d-none d-md-inline">
+                </InputLabel>
+                <TextField id="sales-date" type="date" className="form-control" name="date" />
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <Link to="/sales" style={{ textDecoration: 'none' }}>
+                <ColorButton
+                  variant="contained"
+                  color="primary"
+                  className={styles.button}
+                  startIcon={<ArrowBack />}
+                >
                   <Translate contentKey="entity.action.back">Back</Translate>
-                </span>
-              </Button>
-              &nbsp;
-              <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                <FontAwesomeIcon icon="save" />
-                &nbsp;
+                </ColorButton>
+              </Link>
+              <Button
+                type="submit"
+                disabled={updating}
+                variant="contained"
+                color="primary"
+                className={styles.button}
+                startIcon={<Save />}
+              >
                 <Translate contentKey="entity.action.save">Save</Translate>
               </Button>
-            </AvForm>
-          )}
-        </Col>
-      </Row>
-    </div>
+            </Grid>
+          </form>
+        )}
+    </Grid>
   );
 };
 
@@ -142,3 +189,4 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 export default connect(mapStateToProps, mapDispatchToProps)(SalesUpdate);
+
