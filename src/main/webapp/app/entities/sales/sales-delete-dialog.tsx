@@ -16,7 +16,7 @@ import './sales-delete-dialog.scss';
 const useStyles = makeStyles((theme) => ({
   modal: {
     position: 'absolute',
-    width: 500,
+    maxWidth: 500,
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #777777',
     boxShadow: theme.shadows[5],
