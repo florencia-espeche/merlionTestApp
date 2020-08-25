@@ -1,3 +1,16 @@
+![Sales Table](/Capturas/SalesTable.png)
+
+![Sale Detail](/Capturas/SalesDetail.png)
+
+![Edit Sale](/Capturas/EditSale.png)
+
+![Edit Sale 2](/Capturas/EditSale2.png)
+
+![New Sale](/Capturas/NewSale.png)
+
+![Delete Sale](/Capturas/Delete.png)
+
+
 # Test
 
 This application was generated using JHipster 6.10.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.10.1](https://www.jhipster.tech/documentation-archive/v6.10.1).
