@@ -11,7 +11,7 @@ const Footer = props => {
   return (
     <footer className="footer page-content">
       <Grid container justify="center">
-        <Typography variant="body1" className="footer_container--legal">
+        <Typography component="p" className="footer_container--legal">
           <span><Translate contentKey="legal">All rights reserved</Translate></span>&nbsp;<CopyrightRounded fontSize="small" />&nbsp;2020 Merlion Techs
         </Typography>
       </Grid>

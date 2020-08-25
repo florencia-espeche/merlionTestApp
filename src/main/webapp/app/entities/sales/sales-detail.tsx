@@ -47,7 +47,7 @@ export const SalesDetail = (props: ISalesDetailProps) => {
   const { salesEntity } = props;
   return (
     <Grid container justify="center">
-      <Grid item xs={6}>
+      <Grid item>
         <Typography variant="h2" className={styles.title} id="sales-detail_title">
           <Translate contentKey="testApp.sales.detail.title">Sales</Translate> [<b>{salesEntity.id}</b>]
         </Typography>

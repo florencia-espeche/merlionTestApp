@@ -112,22 +112,32 @@ export const SalesUpdate = (props: ISalesUpdateProps) => {
             ) : null}
             <Grid item>
               <FormControl className={styles.formControl}>
-                <InputLabel id="descriptionLabel" htmlFor="sales-description" className="sales-update_label">
+                <InputLabel
+                  id="descriptionLabel"
+                  htmlFor="sales-description"
+                  className="sales-update_label">
                   <Translate contentKey="testApp.sales.description">Description</Translate>
                 </InputLabel>
-                <Input id="sales-description" type="text" name="description" multiline rowsMax={4} />
+                <Input
+                  id="sales-description"
+                  type="text"
+                  name="description"
+                  multiline
+                  rowsMax={4} />
               </FormControl>
             </Grid>
             <Grid item>
               <FormControl className={styles.formControl}>
-                <InputLabel id="stateLabel" htmlFor="sales-state" className="sales-update_label--state">
+                <InputLabel
+                  id="stateLabel"
+                  htmlFor="sales-state"
+                  className="sales-update_label">
                   <Translate contentKey="testApp.sales.state">State</Translate>
                 </InputLabel>
                 <Select
                   labelId="sales-state"
                   id="state"
                   className="sales-update_select"
-                  value={(!isNew && salesEntity.state) || 'IN_CHARGE'}
                 >
                   <MenuItem value="IN_CHARGE">{translate('testApp.State.IN_CHARGE')}</MenuItem>
                   <MenuItem value="SHIPPED">{translate('testApp.State.SHIPPED')}</MenuItem>
@@ -137,10 +147,17 @@ export const SalesUpdate = (props: ISalesUpdateProps) => {
             </Grid>
             <Grid item>
               <FormControl className={styles.formControl}>
-                <InputLabel id="dateLabel" htmlFor="sales-date" className="sales-update_label--date">
+                <InputLabel
+                  id="dateLabel"
+                  htmlFor="sales-date"
+                  className="sales-update_label--date">
                   <Translate contentKey="testApp.sales.date">Date</Translate>
                 </InputLabel>
-                <TextField id="sales-date" type="date" className="form-control" name="date" />
+                <TextField
+                  id="sales-date"
+                  type="date"
+                  className="form-control"
+                  name="date" />
               </FormControl>
             </Grid>
             <Grid item>

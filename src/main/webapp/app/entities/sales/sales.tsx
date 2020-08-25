@@ -18,13 +18,13 @@ export interface ISalesProps extends StateProps, DispatchProps, RouteComponentPr
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
     head: {
-      backgroundColor: "#5E99C5",
+      backgroundColor: "#2a6a9e",
       color: theme.palette.common.white,
-      padding: 16,
-      fontSize: 18
+      padding: 18,
+      fontSize: 20
     },
     body: {
-      fontSize: 14,
+      fontSize: 16,
     },
   })
 )(TableCell);
