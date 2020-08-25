@@ -10,6 +10,8 @@
 
 ![Delete Sale](/Capturas/Delete.png)
 
+![Mobile](/Capturas/Mobile.png)
+
 
 # Test
 

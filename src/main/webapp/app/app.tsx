@@ -30,6 +30,8 @@ export const App = (props: IAppProps) => {
   }, []);
 
   const paddingTop = '60px';
+  const height = '88vh';
+
   return (
     <Router basename={baseHref}>
       <div className="app-container" style={{ paddingTop }}>
@@ -45,8 +47,8 @@ export const App = (props: IAppProps) => {
             isSwaggerEnabled={props.isSwaggerEnabled}
           />
         </ErrorBoundary>
-        <div className="container-fluid view-container" id="app-view-container">
-          <Card className="jh-card" >
+        <div className="container-fluid view-container" id="app-view-container" style={{ height }}>
+          <Card className="jh-card" style={{ height }}>
             <ErrorBoundary>
               <AppRoutes />
             </ErrorBoundary>

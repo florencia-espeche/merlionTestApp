@@ -71,7 +71,9 @@ export const Sales = (props: ISalesProps) => {
             variant="contained"
             color="primary"
             size="medium"
+            className={styles.button}
             startIcon={<Add />}
+
           >
             <Translate contentKey="testApp.sales.home.createLabel">Create new Sales</Translate>
           </Button>
